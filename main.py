@@ -11,6 +11,9 @@ class Encoder():
     thread_read =None
     q1 =Queue()
     iface =None
+    
+    @
+    data:int
 
 
     def connect(self, path=None, baudrate=115200):
@@ -25,7 +28,21 @@ class Encoder():
         self.iface.stop()
         self.iface= None
 
-    def onread():
+    def onread(self):
+
         while True:
-            line =q1.get()
-            print(line)
+            line =str(self.q1.get())
+            arr=line.split()
+            try :
+                self.data =int(arr[1])
+                print(self.data)
+            except:
+                ''' что то пошло не так, бывает'''
+                pass
+
+
+
+if __name__ == '__main__':
+    conn= Encoder()
+    conn.connect("/dev/ttyUSB0")
+    
