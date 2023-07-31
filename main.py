@@ -11,8 +11,6 @@ class Encoder():
     thread_read =None
     q1 =Queue()
     iface =None
-    
-    @
     data:int
 
 
