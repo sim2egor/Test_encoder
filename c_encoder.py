@@ -5,19 +5,23 @@ from interface import Interface
 
 
 class Encoder():
-    name = "aaa"
+    name = "encoder"
     path = "/dev/ttyUSB0"
     baudrate = 115200
     thread_read =None
     q1 =Queue()
     iface =None
-    data:int
+    
+
+    def __init__(self) -> None:
+        self.__data:int =0
+        
 
 
     def connect(self, path=None, baudrate=115200):
         self.path = path
         self.baudrate = baudrate
-        self.iface =Interface("qqq_"+self.name,self.path,self.baudrate)
+        self.iface =Interface("encoder_"+self.name,self.path,self.baudrate)
         self.iface.start(self.q1)
         self.thread_read =threading.Thread(target=self.onread)
         self.thread_read.start()
@@ -32,12 +36,14 @@ class Encoder():
             line =str(self.q1.get())
             arr=line.split()
             try :
-                self.data =int(arr[1])
-                print(self.data)
+                self.__data =int(arr[1])
+                print(self.__data)
             except:
                 ''' что то пошло не так, бывает'''
                 pass
 
+    def get_data(self):
+        return self.__data
 
 
 if __name__ == '__main__':
